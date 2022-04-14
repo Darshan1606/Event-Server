@@ -86,6 +86,10 @@ app.get('/postEventDetails', (req, res) => {
     })
 })
 
+app.get('/', (req, res) => {
+    res.json({status: "Server Up and Running"})
+})
+
 
 if(process.env.NODE_ENV == "production"){
     app.use(express.static('client/build'))

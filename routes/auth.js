@@ -12,8 +12,8 @@ const JWT_SECRET = 'ahwifbdoajxcvbneiajvcebp'
 
 router.post('/saveUser', (req, res) => {
     //console.log(req.body);
-    const { name, email, password } = req.body
-    if(!email || !password || !name){
+    const { fname, lname, email, password } = req.body
+    if(!email || !password || !fname || !lname){
         return res.status(422).json({error: "please add all the fields!"})
     }
     User.findOne({email: email})
@@ -25,7 +25,8 @@ router.post('/saveUser', (req, res) => {
             .then( hashedPassword => {
                 const user = new User({
                     email,
-                    userName: name,
+                    firstName: fname,
+                    lastName: lname,
                     password: hashedPassword
                 })
     
@@ -35,12 +36,14 @@ router.post('/saveUser', (req, res) => {
                 })
                 .catch( err => {
                     console.log(err);
+                    res.status(500).json({message: "Some error occured"})
                 })
             })
         }
     })
     .catch( err => {
         console.log(err);
+        res.status(500).json({message: "Some error occured"})
     })
     // res.json({message: "Successfully Added"})
 })
@@ -62,8 +65,8 @@ router.post('/userSignin', (req, res) => {
                 // res.json({message: "Successfully Signed IN"})
 
                 const token = jwt.sign({ id: savedUser._id}, JWT_SECRET)
-                const { _id, userName, email } = savedUser
-                res.json({token: token, user: { _id, userName, email }, success: true})
+                const { _id, firstName, lastName, email } = savedUser
+                res.json({token: token, _id, email, firstName, lastName , success: true})
             }
             else{
                 return res.status(422).json({error: "Invalid email or Password!"})
