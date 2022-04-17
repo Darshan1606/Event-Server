@@ -28,7 +28,7 @@ app.use(require("./routes/updateDelete"))
 app.use(require("./routes/chartDetails"))
 
 
-app.get('/myEvents', requireLogin, (req, res) => {
+app.get('/myevents', (req, res) => {
     //console.log(req.user);
     preEvent.find({createdBy: req.user._id})
     .populate("createdBy", "_id userName email")
@@ -40,11 +40,22 @@ app.get('/myEvents', requireLogin, (req, res) => {
     })
 })
 
-app.get('/allEvents', requireLogin, (req, res) => {
+app.get('/events',(req, res) => {
     preEvent.find()
     .populate("createdBy", "_id userName email")
     .then( evnts => {
         res.json({evnts})
+    })
+    .catch( err => {
+        console.log(err)
+    })
+})
+
+app.get('/events/:id',(req, res) => {
+    preEvent.findById(req.param.id)
+
+    .then( evnt => {
+        res.json({evnt})
     })
     .catch( err => {
         console.log(err)

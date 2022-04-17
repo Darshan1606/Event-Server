@@ -6,10 +6,16 @@ const PostEventSchema = mongoose.Schema({
         type: ObjectId,
         ref: "PreEvent"
     },
-    actDate: {
+    eventName: {
         type: String
     },
-    actDateTo: {
+    eventDate: {
+        type: String
+    },
+    eventDateTo: {
+        type: String
+    },
+    location: {
         type: String
     },
     evntDesc: {
@@ -18,30 +24,18 @@ const PostEventSchema = mongoose.Schema({
     noOfStud: {
         type: String
     },
-    evntPic1: {
+    speakName: {
         type: String
     },
-    evntPic2: {
+    speakEmail: {
         type: String
     },
-    evntPic3: {
+    speakNumber: {
         type: String
     },
-    evntPic4: {
-        type: String
-    },
-    evntCerti: {
-        type: String
-    },
-    evntPstr: {
-        type: String
-    },
-    studSheet: {
-        type: String
-    },
-    inputList: {
-        type: []
-    }
+    
+    
+   
 })
 
 const PostEventModel = mongoose.model('PostEvent', PostEventSchema)

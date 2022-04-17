@@ -4,50 +4,42 @@ const postEvent = require('../models/postEvent')
 const preEvent = require('../models/preEvent')
 const requireLogin = require('../middleware/requireLogin')
 
-router.post('/postEvent', requireLogin, (req, res) => {
+router.post('/postEvent',  (req, res) => {
     let preEventRef
     //console.log(req.body);
     //console.log('details received', req.headers)
-    const { userEmail, eventId, eventName, evntType, propDate, propDateTo, durEvnt, evntLevel, orgInst, deptName, inputList} = req.body
+    const {  pId, pName, pDate, pDateTo, plocation, pDesc, pnoOfStud, pspeakName, pspeakEmail, pspeakNumber} = req.body
     //console.log("ID : ", eventId)
-
-    preEvent.findOne({eventId: eventId})
-    .then( pre => {
-        preEventRef = pre
         //console.log("PREEVNT: ", preEventRef)
-
+        preEvent.findOne({eventId: pId})
+        .then( pre => {
+            preEventRef = pre
         const post = new postEvent({
             eventId: preEventRef._id,
-            actDate: req.body.actDate,
-            actDateTo: req.body.actDateTo,
-            evntDesc: req.body.evntDesc,
-            noOfStud: req.body.noOfStud,
-            evntPic1: req.body.evntPic1,
-            evntPic2: req.body.evntPic2,
-            evntPic3: req.body.evntPic3,
-            evntPic4: req.body.evntPic4,
-            evntCerti: req.body.evntCerti,
-            evntPstr: req.body.evntPstr,
-            studSheet: req.body.studSheet,
-            inputList: req.body.inputList
+            eventName:req.body.pName,
+            eventDate: req.body.pDate,
+            eventTo: req.body.pDateTo,
+            eDesc: req.body.pDesc,
+            location: req.body.plocation, 
+            noOfStud: req.body.pnoOfStud,
+            speakName: req.body.pspeakName,
+            speakEmail: req.body.pspeakEmail,
+            speakNumber: req.body.pspeakNumber,
          })
          //preEvent.create(req.body)
-         post.save()
-         .then((response) => {
-             console.log("ENTRY MADE")
-             //res.json(response)
-             res.json({message: "PreEvent Details Saved"})
-         })
-         .catch((err) => {
-             console.log(err)
-         })
-         //console.log(preDetails)
+         post
+    .save()
+    .then((response) => {
+      console.log("ENTRY MADE");
+      //res.json(response)
+      res.json({ message: "PostEvent Details Saved" });
     })
-    .catch( err => {
-        console.log(err)
-    })
-
-})
+    .catch((err) => {
+      console.log(err);
+    });
+});
+  //console.log(preDetails)
+});
     
 // router.get('/getdetails/:id', async (req, res) => {
 //     //console.log(req.params)

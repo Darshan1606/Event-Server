@@ -2,28 +2,31 @@ const mongoose = require('mongoose')
 const { ObjectId } = mongoose.Schema.Types
 
 const PreEventSchema = mongoose.Schema({
-    userEmail: {
-        type: String
-    },
     eventId: {
         type: String
     },
     eventName: {
         type: String
     },
-    evntType: {
+    eventType: {
         type: String
     },
-    propDate: {
+    eventDate: {
         type: String
     },
-    propDateTo: {
+    eventDateTo: {
         type: String
     },
-    durEvnt: {
+    timeFrom: {
         type: String
     },
-    evntLevel: {
+    timeTo: {
+        type: String
+    },
+    location: {
+        type: String
+    },
+    eventLevel: {
         type: String
     },
     orgInst: {
@@ -32,13 +35,16 @@ const PreEventSchema = mongoose.Schema({
     deptName: {
         type: String
     },
-    inputList: {
-        type: [{
-            cordName: String,
-            cordEmail: String,
-            cordNumber: String
-        }]
+    cordName: {
+        type: String
     },
+    cordEmail: {
+        type: String
+    },
+    cordNumber: {
+        type: String
+    },
+    
     createdBy:{
         type: ObjectId,
         ref: "User"
